@@ -57,8 +57,9 @@ namespace Dashboard
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseHsts();
             app.UseAuthentication();
 
             app.UseMvc(routes =>
