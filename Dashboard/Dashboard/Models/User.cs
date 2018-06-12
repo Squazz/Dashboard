@@ -13,6 +13,7 @@ namespace Dashboard.Models
         public DateTime CreateDate { get; set; }
         public DateTime DeleteDate { get; set; }
 
+        public int CustomerId { get; set; }
         private Customer Customer { get; set; }
     }
 }
