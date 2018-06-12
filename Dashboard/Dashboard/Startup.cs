@@ -29,6 +29,8 @@ namespace Dashboard
             // Used for testing
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+            services.AddDbContext<DashboardDbContext>(options =>
+                options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
