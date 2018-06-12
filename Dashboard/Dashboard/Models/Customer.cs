@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Dashboard.Models
 {
@@ -13,6 +14,8 @@ namespace Dashboard.Models
         public string City { get; set; }
         public string Zip { get; set; }
         public string Phone { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime DeleteDate { get; set; }
 
         public ICollection<User> Users { get; set; }
         public ICollection<Server> Servers { get; set; }

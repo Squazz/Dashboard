@@ -1,6 +1,12 @@
-﻿namespace Dashboard.Models
+﻿using System.Collections.Generic;
+
+namespace Dashboard.Models
 {
     public class Application
     {
+        public int Id { get; set; }
+        public string FriendlyName { get; set; }
+
+        public ICollection<ApplicationMonitor> ApplicationMonitors { get; set; }
     }
 }
