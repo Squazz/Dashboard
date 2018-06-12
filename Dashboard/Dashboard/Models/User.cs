@@ -12,5 +12,7 @@ namespace Dashboard.Models
         public bool Phone { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime DeleteDate { get; set; }
+
+        private Customer Customer { get; set; }
     }
 }
