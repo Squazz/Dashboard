@@ -10,6 +10,14 @@ namespace Dashboard.Data
         {
         }
 
+        public DbSet<Application> Applications { get; set; }
+        public DbSet<ApplicationMonitor> ApplicationMonitors { get; set; }
+
+        public DbSet<Customer> Customers { get; set; }
+
+        public DbSet<Server> Servers { get; set; }
+        public DbSet<ServerIP> ServerIPs { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
