@@ -9,7 +9,6 @@ namespace Dashboard.Models
         public ServerIpTypeEnum ServerIpType { get; set; }
         public string Ip { get; set; }
 
-        public int ServerId { get; set; }
         public Server Server { get; set; }
     }
 }
