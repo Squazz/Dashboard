@@ -11,10 +11,10 @@ namespace Dashboard.Models
         public bool RecieveStatusEmails { get; set; }
         public string Phone { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime DeleteDate { get; set; }
+        public DateTime? DeleteDate { get; set; }
 
         public string FullName => FirstName + ", " + LastName;
 
-        private Customer Customer { get; set; }
+        public Customer Customer { get; set; }
     }
 }

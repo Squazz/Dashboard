@@ -7,7 +7,7 @@ namespace Dashboard.Models
         public int Id { get; set; }
         public string FriendlyName { get; set; }
 
-        private Customer Customer { get; set; }
+        public Customer Customer { get; set; }
 
         public ICollection<ServerIP> ServerIPs { get; set; }
         public ICollection<Application> Applications { get; set; }

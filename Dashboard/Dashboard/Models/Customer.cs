@@ -15,7 +15,7 @@ namespace Dashboard.Models
         public string Zip { get; set; }
         public string Phone { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime DeleteDate { get; set; }
+        public DateTime? DeleteDate { get; set; }
 
         public ICollection<User> Users { get; set; }
         public ICollection<Server> Servers { get; set; }
