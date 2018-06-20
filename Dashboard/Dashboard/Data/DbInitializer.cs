@@ -21,13 +21,11 @@ namespace Dashboard.Data
             {
                 new Customer()
                 {
-                    Id = 1,
                     CreateDate = DateTime.Now,
                     Name = "Tapemasters Inc."
                 },
                 new Customer()
                 {
-                    Id = 2,
                     CreateDate = DateTime.Now,
                     Name = "Colibo A/S."
                 },
