@@ -9,7 +9,6 @@ namespace Dashboard.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool RecieveStatusEmails { get; set; }
-        public string Phone { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? DeleteDate { get; set; }
 
