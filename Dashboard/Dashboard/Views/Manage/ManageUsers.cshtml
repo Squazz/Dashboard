@@ -1,0 +1,34 @@
+﻿@model ManageUsersModel
+@{
+    ViewData["Title"] = "ManageUsers";
+    ViewData.AddActivePage(ManageNavPages.ManageUsers);
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                @for(int i = 0; i < Model.Users.Count; i++)
+                {
+                    <input asp-for="@Model.Users[i].Id" hidden="" />
+                    @Model.Users[i].FullName
+                    
+                    <select asp-for="@Model.Users[i].Customer.Id">
+                        @foreach (var customer in Model.Customers)
+                        {
+                            <option value="@customer.Id">@customer.Name</option>
+                        }
+                    </select>
+                }
+            </div>
+            <button type="submit" class="btn btn-default">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

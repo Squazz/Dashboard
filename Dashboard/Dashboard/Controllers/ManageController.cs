@@ -84,11 +84,54 @@ namespace Dashboard.Controllers
 
             dbUser.Email = model.User.Email;
             dbUser.PhoneNumber = model.User.PhoneNumber;
+            dbUser.FirstName = model.User.FirstName;
+            dbUser.LastName = model.User.LastName;
 
             await _dbContext.SaveChangesAsync();
             
             StatusMessage = "Your profile has been updated";
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult ManageUsers()
+        {
+            var users = _dbContext.Users.ToList();
+            var customers = _dbContext.Customers.ToList();
+
+            var model = new ManageUsersModel
+            {
+                Users = users,
+                Customers = customers,
+                StatusMessage = StatusMessage
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ManageUsers(ManageUsersModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            foreach (var modelUser in model.Users)
+            {
+                var user =_dbContext.Users.Single(x => x.Id == modelUser.Id);
+                var customer = _dbContext.Customers.Single(x => x.Id == modelUser.Customer.Id);
+
+                user.Customer = customer;
+
+                _dbContext.Update(user);
+            }
+
+            await _dbContext.SaveChangesAsync();
+            
+            StatusMessage = "Companies was added";
+            return RedirectToAction(nameof(ManageUsers));
         }
 
         [HttpPost]
