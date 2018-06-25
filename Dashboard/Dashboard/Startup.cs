@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -44,7 +45,7 @@ namespace Dashboard
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -68,6 +69,8 @@ namespace Dashboard
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            CreateRoles(serviceProvider).Wait();
         }
 
         // Helper methods
@@ -108,6 +111,45 @@ namespace Dashboard
                 options.AccessDeniedPath = "/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            // Adding custom roles
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+            string[] roleNames = { "Admin", "Manager", "Member" };
+
+            foreach (string roleName in roleNames)
+            {
+                // Creating the roles and seeding them to the database
+                bool roleExist = await roleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            // Creating a superuser who could maintain the web app
+            string userEmail = Configuration.GetSection("UserSettings")["UserEmail"];
+            string userPassword = Configuration.GetSection("UserSettings")["UserPassword"];
+            var adminUser = new User
+            {
+                UserName = userEmail,
+                Email = userEmail
+            };
+
+            var user = await userManager.FindByEmailAsync(userEmail);
+            
+            if (user == null)
+            {
+                var createPowerUser = await userManager.CreateAsync(adminUser, userPassword);
+                if (createPowerUser.Succeeded)
+                {
+                    // Here we tie the new user to the "Admin" role 
+                    await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
+            }
         }
     }
 }
