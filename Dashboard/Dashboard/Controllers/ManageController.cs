@@ -130,9 +130,8 @@ namespace Dashboard.Controllers
                 user.Customer = customer;
 
                 _dbContext.Update(user);
+                await _dbContext.SaveChangesAsync();
             }
-            await _dbContext.SaveChangesAsync();
-
 
             StatusMessage = "Companies was added";
             return RedirectToAction(nameof(ManageUsers));
