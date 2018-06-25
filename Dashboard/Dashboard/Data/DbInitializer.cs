@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Dashboard.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Dashboard.Data
@@ -10,6 +11,7 @@ namespace Dashboard.Data
     {
         public static void Initialize(ApplicationDbContext context)
         {
+            //context.Database.Migrate();
             context.Database.EnsureCreated();
 
             if (context.Customers.Any())
