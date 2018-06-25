@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Dashboard.Data;
 using Dashboard.Models;
+using Dashboard.Models.Enums;
 using Dashboard.Services;
 
 namespace Dashboard
@@ -118,7 +119,7 @@ namespace Dashboard
             // Adding custom roles
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
-            string[] roleNames = { "Admin", "Manager", "Member" };
+            string[] roleNames = { Roles.Admin, Roles.Manager, Roles.Member };
 
             foreach (string roleName in roleNames)
             {
@@ -147,7 +148,7 @@ namespace Dashboard
                 if (createPowerUser.Succeeded)
                 {
                     // Here we tie the new user to the "Admin" role 
-                    await userManager.AddToRoleAsync(adminUser, "Admin");
+                    await userManager.AddToRoleAsync(adminUser, Roles.Admin);
                 }
             }
         }

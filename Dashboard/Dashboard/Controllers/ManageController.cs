@@ -5,12 +5,14 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Dashboard.Data;
+using Dashboard.HelperMethods;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Dashboard.Models;
+using Dashboard.Models.Enums;
 using Dashboard.Models.ManageViewModels;
 using Dashboard.Services;
 
@@ -94,6 +96,7 @@ namespace Dashboard.Controllers
         }
 
         [HttpGet]
+        [AuthorizeRoles(Roles.Admin, Roles.Manager)]
         public IActionResult ManageUsers()
         {
             var users = _dbContext.Users.ToList();
@@ -111,6 +114,7 @@ namespace Dashboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(Roles.Admin, Roles.Manager)]
         public async Task<IActionResult> ManageUsers(ManageUsersModel model)
         {
             if (!ModelState.IsValid)
@@ -127,9 +131,9 @@ namespace Dashboard.Controllers
 
                 _dbContext.Update(user);
             }
-
             await _dbContext.SaveChangesAsync();
-            
+
+
             StatusMessage = "Companies was added";
             return RedirectToAction(nameof(ManageUsers));
         }
