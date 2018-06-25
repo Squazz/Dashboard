@@ -16,7 +16,8 @@ namespace Dashboard.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasAnnotation("MaxLength", 256);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -123,7 +124,8 @@ namespace Dashboard.Data.Migrations
 
             modelBuilder.Entity("Dashboard.Models.User", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasAnnotation("MaxLength", 256);
 
                     b.Property<int>("AccessFailedCount");
 
