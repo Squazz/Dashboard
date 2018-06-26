@@ -12,18 +12,11 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <ul>
-                    @for (int i = 0; i < Model.Users.Count; i++)
+                    @for (int i = 0; i < Model.Customers.Count; i++)
                     {
                         <li>
-                            <input asp-for="@Model.Users[i].Id" hidden="" />
-                            @Model.Users[i].FullName
-
-                            <select asp-for="@Model.Users[i].Customer.Id">
-                                @foreach (var customer in Model.Customers)
-                                {
-                                    <option value="@customer.Id">@customer.Name</option>
-                                }
-                            </select>
+                            <input asp-for="@Model.Customers[i].Id" hidden="" />
+                            @Model.Customers[i].Name
                         </li>
                     }
                 </ul>
