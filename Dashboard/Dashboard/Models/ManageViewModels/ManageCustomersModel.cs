@@ -2,10 +2,9 @@
 
 namespace Dashboard.Models.ManageViewModels
 {
-    public class IndexViewModel
+    public class ManageCustomersModel
     {
-        public User User { get; set; }
-        public List<User> Users { get; set; }
+        public List<Customer> Customers { get; set; }
 
         public string StatusMessage { get; set; }
     }

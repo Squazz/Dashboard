@@ -7,9 +7,14 @@
 <ul class="nav nav-pills nav-stacked">
     <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">Profile</a></li>
     <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Password</a></li>
+
     @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Manager))
     {
         <li class="@ManageNavPages.ManageUsersNavClass(ViewContext)"><a asp-action="ManageUsers">Manage Users</a></li>
+    }
+    @if (User.IsInRole(Roles.Admin))
+    {
+        <li class="@ManageNavPages.ManageCustomers"><a asp-action="ManageCustomers">Create Customers</a></li>
     }
 
     @if (hasExternalLogins)

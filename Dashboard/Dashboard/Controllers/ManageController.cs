@@ -137,6 +137,42 @@ namespace Dashboard.Controllers
             return RedirectToAction(nameof(ManageUsers));
         }
 
+        [HttpGet]
+        [AuthorizeRoles(Roles.Admin)]
+        public IActionResult ManageCustomers()
+        {
+            var customers = _dbContext.Customers.ToList();
+
+            var model = new ManageCustomersModel
+            {
+                Customers = customers,
+                StatusMessage = StatusMessage
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AuthorizeRoles(Roles.Admin)]
+        public async Task<IActionResult> ManageCustomers(ManageCustomersModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            foreach (var modelCustomer in model.Customers)
+            {
+                var customer = _dbContext.Customers.Single(x => x.Id == modelCustomer.Id);
+                _dbContext.Update(customer);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            StatusMessage = "Companies was added";
+            return RedirectToAction(nameof(ManageCustomers));
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendVerificationEmail(IndexViewModel model)
