@@ -1,4 +1,5 @@
-﻿@inject SignInManager<User> SignInManager
+﻿@using Dashboard.Models.Enums
+@inject SignInManager<User> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
@@ -6,7 +7,11 @@
 <ul class="nav nav-pills nav-stacked">
     <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">Profile</a></li>
     <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Password</a></li>
-    <li class="@ManageNavPages.ManageUsersNavClass(ViewContext)"><a asp-action="ManageUsers">Manage Users</a></li>
+    @if (User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Manager))
+    {
+        <li class="@ManageNavPages.ManageUsersNavClass(ViewContext)"><a asp-action="ManageUsers">Manage Users</a></li>
+    }
+
     @if (hasExternalLogins)
     {
         <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">External logins</a></li>
