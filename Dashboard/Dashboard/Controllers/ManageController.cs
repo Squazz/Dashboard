@@ -37,7 +37,8 @@ namespace Dashboard.Controllers
           SignInManager<User> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
-          UrlEncoder urlEncoder, ApplicationDbContext dbContext)
+          UrlEncoder urlEncoder, 
+          ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -162,14 +163,10 @@ namespace Dashboard.Controllers
                 return View(model);
             }
 
-            foreach (var modelCustomer in model.Customers)
-            {
-                var customer = _dbContext.Customers.Single(x => x.Id == modelCustomer.Id);
-                _dbContext.Update(customer);
-                await _dbContext.SaveChangesAsync();
-            }
+            _dbContext.Customers.Add(model.Customer);
+            await _dbContext.SaveChangesAsync();
 
-            StatusMessage = "Companies was added";
+            StatusMessage = "Company added";
             return RedirectToAction(nameof(ManageCustomers));
         }
 

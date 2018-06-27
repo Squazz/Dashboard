@@ -10,18 +10,27 @@
     <div class="col-md-6">
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Customer.Name"></label>
+                <input asp-for="Customer.Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Phone"></label>
+                <input asp-for="Customer.Phone" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-default">Save</button>
             <div class="form-group">
                 <ul>
                     @for (int i = 0; i < Model.Customers.Count; i++)
                     {
                         <li>
-                            <input asp-for="@Model.Customers[i].Id" hidden="" />
-                            @Model.Customers[i].Name
+                            <a href="/Customers/Edit?CustomerId=@Model.Customers[i].Id">@Model.Customers[i].Name</a>
                         </li>
                     }
                 </ul>
             </div>
-            <button type="submit" class="btn btn-default">Save</button>
         </form>
     </div>
 </div>
