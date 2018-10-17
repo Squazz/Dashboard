@@ -29,7 +29,7 @@ namespace Dashboard.Controllers
         public string StatusMessage { get; set; }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int customerId)
+        public IActionResult Edit(int customerId)
         {
             Customer customer = _dbContext.Customers.Single(x => x.Id == customerId);
             var users = _dbContext.Users.ToList();
@@ -47,14 +47,16 @@ namespace Dashboard.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ManageCustomerModel model)
         {
-            //var customer = _dbContext.Customers.Single(x => x.Id == model.Customer.Id);
+            var customer = _dbContext.Customers.Single(x => x.Id == model.Customer.Id);
             var user = _dbContext.Users.Single(x => x.Id == model.User.Id);
 
-            user.Customer = model.Customer;
+            user.Customer = customer;
 
             _dbContext.Update(user);
 
             await _dbContext.SaveChangesAsync();
+
+            model.Users = customer.Users.ToList();
 
             return View(model);
         }
