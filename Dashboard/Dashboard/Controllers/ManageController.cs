@@ -107,7 +107,14 @@ namespace Dashboard.Controllers
             {
                 Users = users,
                 Customers = customers,
-                StatusMessage = StatusMessage
+                StatusMessage = StatusMessage,
+                Roles = new List<RoleEnums>
+                {
+                    RoleEnums.Admin,
+                    RoleEnums.Manager,
+                    RoleEnums.Member
+                }
+
             };
 
             return View(model);
