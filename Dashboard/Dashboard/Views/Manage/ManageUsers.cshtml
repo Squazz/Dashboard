@@ -8,7 +8,8 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <div class="row">
     <div class="col-md-6">
-        <form method="post">
+        @using (Html.BeginForm("ManageUsers", "Manage", FormMethod.Post))
+        {
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <ul>
@@ -21,7 +22,7 @@
                             <select asp-for="@Model.Users[i].Customer.Id">
                                 @foreach (var customer in Model.Customers)
                                 {
-                                    if (Model.Users[i].Customer != null 
+                                    if (Model.Users[i].Customer != null
                                         && (Model.Users[i].Customer.Id == customer.Id))
                                     {
                                         <option value="@customer.Id" selected>@customer.Name</option>
@@ -33,26 +34,27 @@
                                 }
                             </select>
 
-                            @* TODO: Refactor users to have roles *@
-                            @*<select asp-for="@Model.Users[i].Customer.Id">
-                                @foreach (var role in Model.Roles)
+                            @* Almost there! *@
+                            <select asp-for="@Model.UserRoles.Single(x => x.UserId == Model.Users[i].Id).RoleId">
+                                @foreach (var role in Model.Roles.OrderBy(x => x.Item2))
                                 {
-                                    if (Model.Users[i].Id == role.Id)
+                                    if (Model.UserRoles.Any(x => x.UserId == Model.Users[i].Id)
+                                        && Model.UserRoles.First(x => x.UserId == Model.Users[i].Id).RoleId == role.Item1)
                                     {
-                                        <option value="@((int)role)" selected>@role</option>
+                                        <option value="@(role.Item1)" selected>@role.Item2</option>
                                     }
                                     else
                                     {
-                                        <option value="@((int)role)">@role</option>
+                                        <option value="@(role.Item1)">@role.Item2</option>
                                     }
                                 }
-                            </select>*@
+                            </select>
                         </li>
                     }
                 </ul>
             </div>
             <button type="submit" class="btn btn-default">Save</button>
-        </form>
+        }
     </div>
 </div>
 

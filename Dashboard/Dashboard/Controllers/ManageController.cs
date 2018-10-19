@@ -100,21 +100,21 @@ namespace Dashboard.Controllers
         [AuthorizeRoles(Roles.Admin, Roles.Manager)]
         public IActionResult ManageUsers()
         {
-            var users = _dbContext.Users.ToList();
-            var customers = _dbContext.Customers.ToList();
+            List<User> users = _dbContext.Users.ToList();
+            List<Customer> customers = _dbContext.Customers.ToList();
+            List<IdentityUserRole<string>> userRoles = _dbContext.UserRoles.ToList();
 
             var model = new ManageUsersModel
             {
                 Users = users,
                 Customers = customers,
                 StatusMessage = StatusMessage,
-                Roles = new List<RoleEnums>
-                {
-                    RoleEnums.Admin,
-                    RoleEnums.Manager,
-                    RoleEnums.Member
-                }
-
+                Roles = _dbContext.Roles
+                .Select(x => new { x.Id, x.Name })
+                .AsEnumerable()
+                .Select(x => new Tuple<string, string>(x.Id, x.Name))
+                .ToList(),
+                UserRoles = userRoles
             };
 
             return View(model);
@@ -134,8 +134,10 @@ namespace Dashboard.Controllers
             {
                 var user =_dbContext.Users.Single(x => x.Id == modelUser.Id);
                 var customer = _dbContext.Customers.Single(x => x.Id == modelUser.Customer.Id);
+                var userRole = _dbContext.UserRoles.Single(x => x.UserId == user.Id);
 
                 user.Customer = customer;
+                //userRole.RoleId = modelUser.Role.Id;
 
                 _dbContext.Update(user);
                 await _dbContext.SaveChangesAsync();
