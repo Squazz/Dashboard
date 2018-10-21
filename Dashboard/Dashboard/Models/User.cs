@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace Dashboard.Models
@@ -15,5 +16,11 @@ namespace Dashboard.Models
         public string FullName => FirstName + ", " + LastName;
 
         public Customer Customer { get; set; }
+
+        /// <summary>
+        /// Navigation property for the roles this user belongs to.
+        /// </summary>
+        // public virtual ICollection<UserRole> Roles { get; } = new List<UserRole>();
+        public virtual ICollection<IdentityUserRole<string>> Roles { get; } = new List<IdentityUserRole<string>>();
     }
 }

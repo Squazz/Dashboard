@@ -15,6 +15,7 @@ using Dashboard.Models;
 using Dashboard.Models.Enums;
 using Dashboard.Models.ManageViewModels;
 using Dashboard.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Dashboard.Controllers
 {
@@ -100,7 +101,7 @@ namespace Dashboard.Controllers
         [AuthorizeRoles(Roles.Admin, Roles.Manager)]
         public IActionResult ManageUsers()
         {
-            List<User> users = _dbContext.Users.ToList();
+            List<User> users = _dbContext.Users.Include(u => u.Roles).ToList();
             List<Customer> customers = _dbContext.Customers.ToList();
             List<IdentityUserRole<string>> userRoles = _dbContext.UserRoles.ToList();
 
