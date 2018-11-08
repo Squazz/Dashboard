@@ -35,11 +35,10 @@
                             </select>
 
                             @* Almost there! *@
-                            <select asp-for="@Model.UserRoles.Single(x => x.UserId == Model.Users[i].Id).RoleId">
+                            <select asp-for="@Model.Users[i].Role">
                                 @foreach (var role in Model.Roles.OrderBy(x => x.Item2))
                                 {
-                                    if (Model.UserRoles.Any(x => x.UserId == Model.Users[i].Id)
-                                        && Model.UserRoles.First(x => x.UserId == Model.Users[i].Id).RoleId == role.Item1)
+                                    if (Model.Users[i].Role.RoleId == role.Item1)
                                     {
                                         <option value="@(role.Item1)" selected>@role.Item2</option>
                                     }
