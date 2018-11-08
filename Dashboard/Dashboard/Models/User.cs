@@ -16,6 +16,6 @@ namespace Dashboard.Models
 
         public Customer Customer { get; set; }
 
-        public IdentityUserRole<string> Role { get; set; }
+        public string Role { get; set; }
     }
 }

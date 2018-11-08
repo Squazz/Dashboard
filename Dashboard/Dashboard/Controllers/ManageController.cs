@@ -101,20 +101,14 @@ namespace Dashboard.Controllers
         [AuthorizeRoles(Roles.Admin, Roles.Manager)]
         public IActionResult ManageUsers()
         {
-            List<User> users = _dbContext.Users.Include(u => u.Roles).ToList();
+            List<User> users = _dbContext.Users.Include(u => u.Role).ToList();
             List<Customer> customers = _dbContext.Customers.ToList();
-            List<IdentityUserRole<string>> userRoles = _dbContext.UserRoles.ToList();
 
             var model = new ManageUsersModel
             {
                 Users = users,
                 Customers = customers,
-                StatusMessage = StatusMessage,
-                Roles = _dbContext.Roles
-                .Select(x => new { x.Id, x.Name })
-                .AsEnumerable()
-                .Select(x => new Tuple<string, string>(x.Id, x.Name))
-                .ToList()
+                StatusMessage = StatusMessage
             };
 
             return View(model);

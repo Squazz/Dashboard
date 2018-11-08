@@ -34,11 +34,11 @@
                                 }
                             </select>
 
-                            @* Almost there! *@
+                            @* Almost there!
                             <select asp-for="@Model.Users[i].Role">
                                 @foreach (var role in Model.Roles.OrderBy(x => x.Item2))
                                 {
-                                    if (Model.Users[i].Role.RoleId == role.Item1)
+                                    if (Model.Users[i].Role.Id == role.Item1)
                                     {
                                         <option value="@(role.Item1)" selected>@role.Item2</option>
                                     }
@@ -47,7 +47,7 @@
                                         <option value="@(role.Item1)">@role.Item2</option>
                                     }
                                 }
-                            </select>
+                            </select> *@
                         </li>
                     }
                 </ul>
