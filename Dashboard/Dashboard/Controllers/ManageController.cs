@@ -113,8 +113,7 @@ namespace Dashboard.Controllers
                 .Select(x => new { x.Id, x.Name })
                 .AsEnumerable()
                 .Select(x => new Tuple<string, string>(x.Id, x.Name))
-                .ToList(),
-                UserRoles = userRoles
+                .ToList()
             };
 
             return View(model);
