@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace Dashboard.Models
@@ -15,5 +16,7 @@ namespace Dashboard.Models
         public string FullName => FirstName + ", " + LastName;
 
         public Customer Customer { get; set; }
+
+        public virtual IdentityUserRole<string> Role { get; } = new IdentityUserRole<string>();
     }
 }
