@@ -17,6 +17,6 @@ namespace Dashboard.Models
 
         public Customer Customer { get; set; }
 
-        public virtual IdentityUserRole<string> Role { get; } = new IdentityUserRole<string>();
+        public IdentityUserRole<string> Role { get; set; }
     }
 }
