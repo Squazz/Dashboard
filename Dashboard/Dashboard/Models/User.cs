@@ -17,10 +17,6 @@ namespace Dashboard.Models
 
         public Customer Customer { get; set; }
 
-        /// <summary>
-        /// Navigation property for the roles this user belongs to.
-        /// </summary>
-        // public virtual ICollection<UserRole> Roles { get; } = new List<UserRole>();
-        public virtual ICollection<IdentityUserRole<string>> Roles { get; } = new List<IdentityUserRole<string>>();
+        public virtual IdentityUserRole<string> Role { get; } = new IdentityUserRole<string>();
     }
 }

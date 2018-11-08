@@ -22,20 +22,15 @@ namespace Dashboard.Data
         {
             base.OnModelCreating(builder);
             //builder.Entity<IdentityUser>().ToTable("AspNetUsers");
+
+            builder.Entity<User>().ToTable("AspNetUsers");
+
             builder.Entity<User>()
-                .ToTable("AspNetUsers")
-                .HasMany(u => u.Roles)
-                .WithOne()
-                .HasForeignKey(u => u.UserId)
+                .HasOne(e => e.Role)
+                .WithMany()
+                .HasForeignKey(e => e.Id)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
-
-            // builder.Entity<UserRole>()
-            //     .HasOne(ur => ur.Role)
-            //     .WithMany()
-            //     .HasForeignKey(ur => ur.RoleId)
-            //     .IsRequired()
-            //     .OnDelete(DeleteBehavior.Cascade);
 
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
