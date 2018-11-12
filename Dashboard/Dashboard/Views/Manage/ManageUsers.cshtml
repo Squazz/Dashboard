@@ -34,21 +34,7 @@
                                 }
                             </select>
 
-                            @* Almost there! *@
-                            <select asp-for="@Model.UserRoles.Single(x => x.UserId == Model.Users[i].Id).RoleId">
-                                @foreach (var role in Model.Roles.OrderBy(x => x.Item2))
-                                {
-                                    if (Model.UserRoles.Any(x => x.UserId == Model.Users[i].Id)
-                                        && Model.UserRoles.First(x => x.UserId == Model.Users[i].Id).RoleId == role.Item1)
-                                    {
-                                        <option value="@(role.Item1)" selected>@role.Item2</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@(role.Item1)">@role.Item2</option>
-                                    }
-                                }
-                            </select>
+                            <a asp-action="UpdateRole" asp-route-userId="@Model.Users[i].Id">Change role</a>
                         </li>
                     }
                 </ul>

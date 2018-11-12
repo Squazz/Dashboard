@@ -102,19 +102,12 @@ namespace Dashboard.Controllers
         {
             List<User> users = _dbContext.Users.ToList();
             List<Customer> customers = _dbContext.Customers.ToList();
-            List<IdentityUserRole<string>> userRoles = _dbContext.UserRoles.ToList();
 
             var model = new ManageUsersModel
             {
                 Users = users,
                 Customers = customers,
-                StatusMessage = StatusMessage,
-                Roles = _dbContext.Roles
-                .Select(x => new { x.Id, x.Name })
-                .AsEnumerable()
-                .Select(x => new Tuple<string, string>(x.Id, x.Name))
-                .ToList(),
-                UserRoles = userRoles
+                StatusMessage = StatusMessage
             };
 
             return View(model);
@@ -134,7 +127,6 @@ namespace Dashboard.Controllers
             {
                 var user =_dbContext.Users.Single(x => x.Id == modelUser.Id);
                 var customer = _dbContext.Customers.Single(x => x.Id == modelUser.Customer.Id);
-                var userRole = _dbContext.UserRoles.Single(x => x.UserId == user.Id);
 
                 user.Customer = customer;
                 //userRole.RoleId = modelUser.Role.Id;
@@ -145,6 +137,25 @@ namespace Dashboard.Controllers
 
             StatusMessage = "Companies was added";
             return RedirectToAction(nameof(ManageUsers));
+        }
+
+        [HttpGet]
+        [AuthorizeRoles(Roles.Admin)]
+        public IActionResult UpdateRole(string userId)
+        {
+            List<IdentityUserRole<string>> userRoles = _dbContext.UserRoles.Where(x => x.UserId == userId).ToList();
+
+            var model = new ChangeRoleModel
+            {
+                Roles = _dbContext.Roles
+                    .Select(x => new {x.Id, x.Name})
+                    .AsEnumerable()
+                    .Select(x => new Tuple<string, string>(x.Id, x.Name))
+                    .ToList(),
+                UserRoles = userRoles
+            };
+
+            return View(model);
         }
 
         [HttpGet]
