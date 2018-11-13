@@ -79,6 +79,8 @@ namespace Dashboard
         {
             services.Configure<IdentityOptions>(options =>
             {
+                options.SignIn.RequireConfirmedEmail = true;
+
                 // Password settings
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 8;
@@ -137,7 +139,8 @@ namespace Dashboard
             var adminUser = new User
             {
                 UserName = userEmail,
-                Email = userEmail
+                Email = userEmail,
+                EmailConfirmed = true
             };
 
             var user = await userManager.FindByEmailAsync(userEmail);
