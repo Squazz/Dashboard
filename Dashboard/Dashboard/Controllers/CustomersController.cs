@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Dashboard.Data;
 using Dashboard.Models;
@@ -71,6 +72,23 @@ namespace Dashboard.Controllers
             model.Users = customer.Users.ToList();
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int customerId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("~/Views/Manage/ManageCustomers.cshtml");
+            }
+
+            var customer = _dbContext.Customers.Single(x => x.Id == customerId);
+            
+            customer.DeleteDate = DateTime.Now;
+
+            await _dbContext.SaveChangesAsync();
+
+            return View("~/Views/Manage/ManageCustomers.cshtml");
         }
     }
 }

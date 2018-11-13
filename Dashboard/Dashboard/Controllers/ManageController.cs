@@ -101,7 +101,7 @@ namespace Dashboard.Controllers
         public IActionResult ManageUsers()
         {
             List<User> users = _dbContext.Users.ToList();
-            List<Customer> customers = _dbContext.Customers.ToList();
+            List<Customer> customers = _dbContext.Customers.Where(x => x.DeleteDate.HasValue == false).ToList();
             List<IdentityUserRole<string>> userRoles = _dbContext.UserRoles.ToList();
 
             var model = new ManageUsersModel
@@ -191,7 +191,7 @@ namespace Dashboard.Controllers
         [AuthorizeRoles(Roles.Admin)]
         public IActionResult ManageCustomers()
         {
-            var customers = _dbContext.Customers.ToList();
+            var customers = _dbContext.Customers.Where(x => x.DeleteDate.HasValue == false).ToList();
 
             var model = new ManageCustomersModel
             {
