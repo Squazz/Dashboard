@@ -102,11 +102,18 @@ namespace Dashboard.Controllers
         {
             List<User> users = _dbContext.Users.ToList();
             List<Customer> customers = _dbContext.Customers.ToList();
+            List<IdentityUserRole<string>> userRoles = _dbContext.UserRoles.ToList();
 
             var model = new ManageUsersModel
             {
                 Users = users,
                 Customers = customers,
+                UserRoles = userRoles,
+                Roles = _dbContext.Roles
+                    .Select(x => new { x.Id, x.Name })
+                    .AsEnumerable()
+                    .Select(x => new Tuple<string, string>(x.Id, x.Name))
+                    .ToList(),
                 StatusMessage = StatusMessage
             };
 

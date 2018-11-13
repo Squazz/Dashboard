@@ -7,7 +7,7 @@
 <h4>@ViewData["Title"]</h4>
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         @using (Html.BeginForm("ManageUsers", "Manage", FormMethod.Post))
         {
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -33,7 +33,15 @@
                                     }
                                 }
                             </select>
-
+                            
+                            (@foreach (var role in Model.UserRoles)
+                            {
+                                if (Model.Users[i].Id  == role.UserId)
+                                {
+                                    var specificRole = Model.Roles.Single(x => x.Item1 == role.RoleId);
+                                    @specificRole.Item2
+                                }
+                            })
                             <a asp-action="UpdateRole" asp-route-userId="@Model.Users[i].Id">Change role</a>
                         </li>
                     }
