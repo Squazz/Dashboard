@@ -1,8 +1,41 @@
 ﻿@model ChangeRoleModel
 @{
-    ViewData["Title"] = "ChangeRole";
+    ViewData["Title"] = "Change Role";
     ViewData.AddActivePage(ManageNavPages.ManageUsers);
 }
 
-@{
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("UpdateRole", "Manage", FormMethod.Post))
+        {
+            for (int i = 0; i < Model.UserRoles.Count; i++)
+            {
+                <input asp-for="@Model.UserRoles[i].UserId" hidden="" />
+                @Model.User.FullName
+
+                <select asp-for="@Model.UserRoles[i].RoleId">
+                    @foreach (var role in Model.Roles)
+                    {
+                        if (Model.UserRoles[i].RoleId == role.Item1)
+                        {
+                            <option value="@role.Item1" selected>@role.Item2</option>
+                        }
+                        else
+                        {
+                            <option value="@role.Item1">@role.Item2</option>
+                        }
+                    }
+                </select>
+            }
+
+            <button type="submit" class="btn btn-default">Save</button>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

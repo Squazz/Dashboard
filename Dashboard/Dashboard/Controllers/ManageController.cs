@@ -143,10 +143,13 @@ namespace Dashboard.Controllers
         [AuthorizeRoles(Roles.Admin)]
         public IActionResult UpdateRole(string userId)
         {
+            var user = _dbContext.Users.Single(x => x.Id == userId);
+
             List<IdentityUserRole<string>> userRoles = _dbContext.UserRoles.Where(x => x.UserId == userId).ToList();
 
             var model = new ChangeRoleModel
             {
+                User = user,
                 Roles = _dbContext.Roles
                     .Select(x => new {x.Id, x.Name})
                     .AsEnumerable()
@@ -156,6 +159,25 @@ namespace Dashboard.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        [AuthorizeRoles(Roles.Admin)]
+        public async Task<IActionResult> UpdateRole(ChangeRoleModel model)
+        {
+            var user = _dbContext.Users.Single(x => x.Id == model.UserRoles.First().UserId);
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            await _userManager.RemoveFromRolesAsync(user, roles);
+
+            var role = _dbContext.Roles
+                .Single(x => x.Id == model.UserRoles.First().RoleId);
+
+            await _userManager.AddToRoleAsync(user, role.Name);
+
+            StatusMessage = "Role Updated";
+            return RedirectToAction(nameof(ManageUsers));
         }
 
         [HttpGet]
