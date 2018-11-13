@@ -45,8 +45,22 @@ namespace Dashboard.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ManageCustomerModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var customer = _dbContext.Customers.Single(x => x.Id == model.Customer.Id);
             var user = _dbContext.Users.Single(x => x.Id == model.User.Id);
+
+            customer.Address = model.Customer.Address;
+            customer.Att = model.Customer.Att;
+            customer.City = model.Customer.City;
+            customer.Email = model.Customer.Email;
+            customer.VATNumber = model.Customer.VATNumber;
+            customer.Zip = model.Customer.Zip;
+            customer.Name = model.Customer.Name;
+            customer.Phone = model.Customer.Phone;
 
             user.Customer = customer;
 

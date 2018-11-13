@@ -19,14 +19,40 @@
                 <label asp-for="Customer.Phone"></label>
                 <input asp-for="Customer.Phone" class="form-control" />
             </div>
+            <div class="form-group">
+                <label asp-for="Customer.Email"></label>
+                <input asp-for="Customer.Email" class="form-control" />
+            </div>
 
-            <button type="submit" class="btn btn-default">Save</button>
+            <div class="form-group">
+                <label asp-for="Customer.Address"></label>
+                <input asp-for="Customer.Address" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Att"></label>
+                <input asp-for="Customer.Att" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.City"></label>
+                <input asp-for="Customer.City" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Zip"></label>
+                <input asp-for="Customer.Zip" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Customer.VATNumber"></label>
+                <input asp-for="Customer.VATNumber" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-default">Create</button>
             <div class="form-group">
                 <ul>
                     @for (int i = 0; i < Model.Customers.Count; i++)
                     {
                         <li>
-                            <a href="/Customers/Edit?CustomerId=@Model.Customers[i].Id">@Model.Customers[i].Name</a>
+                            <a asp-controller="Customers" asp-action="Edit" asp-route-customerId="@Model.Customers[i].Id">@Model.Customers[i].Name</a>
                         </li>
                     }
                 </ul>
