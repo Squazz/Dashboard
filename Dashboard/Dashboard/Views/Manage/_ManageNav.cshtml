@@ -16,6 +16,10 @@
     {
         <li class="@ManageNavPages.ManageCustomers"><a asp-action="ManageCustomers">Manage Customers</a></li>
     }
+    @if (User.IsInRole(Roles.Manager))
+    {
+        <li class="@ManageNavPages.ManageCustomers"><a asp-controller="Customers" asp-action="Edit">Manage Customer</a></li>
+    }
 
     @if (hasExternalLogins)
     {
