@@ -1,0 +1,27 @@
+﻿@model CreateUserModel
+@{
+    ViewData["Title"] = "Manage Users";
+    ViewData.AddActivePage(ManageNavPages.ManageUsers);
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("CreateUser", "Manage", FormMethod.Post))
+        {
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="@Model.User.FirstName"></label>
+            <input asp-for="@Model.User.FirstName" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-default">Save</button>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -120,6 +120,25 @@ namespace Dashboard.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [AuthorizeRoles(Roles.Admin, Roles.Manager)]
+        public IActionResult CreateUser()
+        {
+            List<User> users = _dbContext.Users.ToList();
+            List<Customer> customers = _dbContext.Customers.Where(x => x.DeleteDate.HasValue == false).ToList();
+            List<IdentityUserRole<string>> userRoles = _dbContext.UserRoles.ToList();
+
+            var model = new CreateUserModel
+            {
+                User = new User()
+                {
+                    FirstName = ""
+                }
+            };
+
+            return View(model);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeRoles(Roles.Admin, Roles.Manager)]
