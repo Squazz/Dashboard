@@ -1,23 +1,48 @@
 ﻿@model CreateUserModel
 @{
-    ViewData["Title"] = "Manage Users";
-    ViewData.AddActivePage(ManageNavPages.ManageUsers);
+    ViewData["Title"] = "Create User";
+    ViewData.AddActivePage(ManageNavPages.CreateUser);
 }
 
 <h4>@ViewData["Title"]</h4>
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         @using (Html.BeginForm("CreateUser", "Manage", FormMethod.Post))
         {
-        <div asp-validation-summary="All" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
 
-        <div class="form-group">
-            <label asp-for="@Model.User.FirstName"></label>
-            <input asp-for="@Model.User.FirstName" class="form-control" />
-        </div>
+            <div class="form-group">
+                <label asp-for="@Model.User.FirstName"></label>
+                <input asp-for="@Model.User.FirstName" class="form-control" />
+            </div>
 
-        <button type="submit" class="btn btn-default">Save</button>
+            <div class="form-group">
+                <label asp-for="@Model.User.LastName"></label>
+                <input asp-for="@Model.User.LastName" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.User.Email"></label>
+                <input asp-for="@Model.User.Email" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.User.RecieveStatusEmails"></label>
+                <input type="checkbox" checked asp-for="@Model.User.RecieveStatusEmails" class="checkbox"/>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.User.PhoneNumber"></label>
+                <input asp-for="@Model.User.PhoneNumber" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.User.UserName"></label>
+                <input asp-for="@Model.User.UserName" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-default">Save</button>
         }
     </div>
 </div>
