@@ -43,8 +43,8 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="@Model.User.Customer"></label>
-                <select>
+                <label asp-for="@Model.CustomerId"></label>
+                <select asp-for="@Model.CustomerId">
                     @foreach (var company in Model.Customers)
                     {
                         <option value="@company.Id">@company.Name</option>

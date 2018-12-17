@@ -120,21 +120,6 @@ namespace Dashboard.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        [AuthorizeRoles(Roles.Admin, Roles.Manager)]
-        public IActionResult CreateUser()
-        {
-            List<Customer> customers = _dbContext.Customers.Where(x => x.DeleteDate.HasValue == false).ToList();
-
-            var model = new CreateUserModel
-            {
-                User = new User(),
-                Customers = customers
-            };
-
-            return View(model);
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeRoles(Roles.Admin, Roles.Manager)]
@@ -159,6 +144,40 @@ namespace Dashboard.Controllers
 
             StatusMessage = "Companies was added";
             return RedirectToAction(nameof(ManageUsers));
+        }
+
+        [HttpGet]
+        [AuthorizeRoles(Roles.Admin, Roles.Manager)]
+        public IActionResult CreateUser()
+        {
+            return ReturnNewCreateUserModel();
+        }
+
+        [HttpPost]
+        [AuthorizeRoles(Roles.Admin, Roles.Manager)]
+        public IActionResult CreateUser(CreateUserModel model)
+        {
+            var customer = _dbContext.Customers.Single(x => x.Id == model.CustomerId);
+
+            model.User.Customer = customer;
+
+            _dbContext.Users.Add(model.User);
+            _dbContext.SaveChanges();
+
+            return ReturnNewCreateUserModel();
+        }
+
+        private IActionResult ReturnNewCreateUserModel()
+        {
+            List<Customer> customers = _dbContext.Customers.Where(x => x.DeleteDate.HasValue == false).ToList();
+
+            var model = new CreateUserModel
+            {
+                User = new User(),
+                Customers = customers
+            };
+
+            return View(model);
         }
 
         [HttpGet]
