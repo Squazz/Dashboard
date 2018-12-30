@@ -17,6 +17,8 @@
                     {
                         <li>
                             <input asp-for="@Model.Users[i].Id" hidden="" />
+                            <input asp-for="@Model.Users[i].FirstName" hidden="" />
+                            <input asp-for="@Model.Users[i].Email" hidden="" />
                             @Model.Users[i].FullName
 
                             <select asp-for="@Model.Users[i].Customer.Id">

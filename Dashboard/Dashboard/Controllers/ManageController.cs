@@ -143,7 +143,7 @@ namespace Dashboard.Controllers
             }
 
             StatusMessage = "Companies was added";
-            return RedirectToAction(nameof(ManageUsers));
+            return ManageUsers();
         }
 
         [HttpGet]
